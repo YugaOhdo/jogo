@@ -3,10 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Agenda</title>
     <link rel="stylesheet" href="{% static "global/css/style.css" %}">
+    <!-- Bootstrap CSS -->
+     {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+  
 </head>
-<body>
-    <h1> H1 </h1>
+<body class="bg-secondary align-items-center">
+    {% block navbar %}
+       {% include "global/partials/_header.html" %}
+    {% endblock navbar %}
+
+    {% if messages %}
+        <div class=" container d-flex justify-content-center align-items-center mt-3 mb-3 ">
+            {% for message in messages  %}  
+                <div class="text-white {{message.tags}} text-center"> 
+                    {% comment %} com esse message.tags, podemos criar classes CSS
+                     message.info, message.warning etc.
+                     {% endcomment %}
+                {{message}}
+                </div> 
+            {% endfor %}
+        </div>   
+    {% endif %}
+
+    <div class="container bg-white">
+        {% block content %}{% endblock content %}
+        {% include "global/partials/_pagination.html" %}
+    </div>
 </body>
 </html>
+

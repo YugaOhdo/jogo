@@ -1,3 +1,19 @@
 /* body {
     background: red;
 } */
+.responsive-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.errorlist {
+    list-style-type: none;  /* Remove os marcadores de lista */
+    margin: 0;  /* Remove a margem padrão */
+    padding: 0;  /* Remove o preenchimento padrão */
+    color: red
+}
+form ul {
+    list-style-type: none;  /* Remove o ponto de lista */
+    margin: 0;
+    padding: 0;
+}

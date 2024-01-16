@@ -1,1 +1,44 @@
-{% extends "global/base.html" %}
+{% extends  "global/base.html" %}
+
+{% block content %}
+    <br>
+    <div class="container">
+    {% if page_obj  %}
+        
+        <table class="table table-reponsive table-striped ">
+            {% comment %} <caption> Contacts</caption> {% endcomment %}
+            <thead>
+                <tr> 
+                    <th>ID</th>
+                    <th>first_name</th>
+                    <th>last_name</th>
+                    <th>phone</th>
+                    <th>email</th>
+                    <th>show</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in page_obj  %}
+                {% if contact.show  %}
+                <tr>
+                    <td> <a href="{% url 'contact:oneContact' contact.id %}"> {{contact.id}} </a>  </td>
+                    <td>{{contact.first_name}}</td>
+                    <td>{{contact.last_name}}</td>
+                    <td> {{contact.phone}} </td>
+                    <td> {{contact.email}}</td>
+                    <td> {{contact.show}}</td>
+                </tr> 
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+        <div class="container" >
+            <h1>Nenhum contato encontrado</h1>
+        </div>
+    
+    {% endif %} 
+    
+{% endblock content %}
