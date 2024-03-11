@@ -1,0 +1,268 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block block %}
+<style>
+  html { 
+  background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  @media (max-width: 400px) { 
+    .monstro {
+      font-size: 6px;
+    }
+    .monstro_b {
+      width: 80px !important;
+      height: 110px !important;
+    }
+    .destinydraw {
+      font-size: 7px;
+    }
+    .botaoA {
+      font-size: 8px !important;
+      padding: 0px !important;
+      margin:0px !important;
+    }
+    .textoLP {
+      font-size:9px !important;
+    }
+    .coracao{
+      width:30px !important;
+    }
+    .recom {
+      font-size: 9px;
+    }
+  }
+
+  @media (min-width:400px) and (max-width: 576px) { 
+    .monstro {
+      font-size: 7px;
+    }
+    .monstro_b {
+      width: 90px !important;
+      height: 130px !important;
+    }
+    .destinydraw {
+      font-size: 8px;
+    }
+    .botaoA {
+      font-size: 10px !important;
+      padding: 0px !important;
+      margin:0px !important;
+    }
+    .textoLP {
+      font-size:10px !important;
+    }
+    .coracao{
+      width:30px !important;
+    }
+    .recom {
+      font-size: 9px;
+    }
+  }
+ 
+ @media (min-width: 576px) and (max-width: 768px) { 
+  .monstro {
+    font-size: 10px;
+  }
+  .monstro_b {
+    width: 110px !important;
+    height: 150px !important;
+  }
+  }
+ 
+ @media (min-width: 768px) and (max-width: 992px){ 
+    .monstro {
+      font-size: 15px;
+    }
+  }
+ 
+}
+</style>
+
+<div class=" text-white h-100 w-100 mb-0" style="background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat; background-size: cover; opacity: 1; " >
+  <div class="row">
+  <form method="post" action="{% url 'contact:batalha1' %}?tutorial=true" class="col-12">
+    {% csrf_token %}
+    <button type="submit" style="width:auto;" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="50 energia mágica: recupere 1 ponto de vida">
+      <p class="botaoA">Tutorial</p>
+    </button> <br>
+  
+  </form>
+  {% if tutorial %}
+      <p class="monstro" > 
+        Condição de vitória: zerar os corações do oponente<br>
+  A cada batalha entre monstros perdida, o duelista perde 1 coração<br>
+  <br>
+  Botão de draw lhe permite comprar a sua próxima carta que irá batalhar<br>
+  Botão de comparar irá fazer os monstros batalharem<br>
+  <br>
+  Habilidades usando energia mágica:<br>
+  Aumentar vida - 50 energia mágica: recupere 1 ponto de vida<br>
+  Aumentar poder - 20 energia mágica: aumente em 20% o ataque de seu monstro<br>
+  Energia das trevas - 10 energia mágica: adicione 200 de ataque a um monstro do atributo trevas<br>
+  Poder de fogo - 10 energia mágica: adicione 200 de ataque a um monstro do atributo fogo<br>
+  Impulso de água - 10 energia mágica: adicione 200 de ataque a um monstro do atributo água<br>
+  Destiny Draw - 70 energia mágica: Mude a sua próxima draw para sua melhor carta<br>
+      </p>
+  {% endif %}
+  </div>
+
+    <div class="container ">
+        <div class="h-50 ">
+
+          {% if drawPerformed == True and controle == 0  %}
+              <div class="row col-12">
+                <span class="col-3">
+                    <h5 class="monstro">Monstro aliado</h5>
+                    <img src="{% static image %}" class="monstro_b" 
+                     style="width: 164px; height: 242px;">
+                    <h5>{{atk}}</h5>
+
+                </span>
+                <span class="col-3">
+                  <h5 class="monstro">Monstro adversário</h5>
+                  <img src="{% static villain_card %}" class="monstro_b"   style="width: 164px; height: 242px;">
+                  <h5>{{villain_card_atk}}</h5>
+                </span>
+                {% if verification == True %}
+                <span class="col-3 mt-5">
+                  <form method="post" action="{% url 'contact:batalha1' %}?recover_lp=true">
+                    {% csrf_token %}
+                    <button type="submit" style="width:auto;" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="50 energia mágica: recupere 1 ponto de vida">
+                      <p class="botaoA">Recuperar vida</p>
+                    </button>
+                </form>
+                <form method="post" action="{% url 'contact:batalha1' %}?power_up=true">
+                  {% csrf_token %}
+                  <button type="submit" style="width:auto;" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="20 energia mágica: aumente em 20% o ataque de seu monstro">
+                    <p class="botaoA" >Aumentar Poder </p>
+                  </button>
+              </form>
+              <form method="post" action="{% url 'contact:batalha1' %}?dark_energy=true">
+                {% csrf_token %}
+                <button type="submit" style="width:auto;" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="10 energia mágica: adicione 200 de ataque a um monstro do atributo trevas">
+                  <p class="botaoA" > Energia das trevas </p>
+                </button>
+            </form>
+            <form method="post" action="{% url 'contact:batalha1' %}?fire_power=true">
+              {% csrf_token %}
+              <button type="submit"style="width:auto;" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="10 energia mágica: adicione 200 de ataque a um monstro do atributo fogo">
+                <p class="botaoA">Poder de fogo</p>
+              </button>
+          </form>
+          <form method="post" action="{% url 'contact:batalha1' %}?water_impulse=true">
+            {% csrf_token %}
+            <button type="submit"style="width:auto;"  class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="10 energia mágica: adicione 200 de ataque a um monstro do atributo água">
+              <p class="botaoA"> Impulso de água </p>
+            </button>
+        </form>
+                </span>
+                <span class="col-3 text-center d-flex align-items-center">
+                  <form method="post" action="{% url 'contact:batalha1' %}?compare=true">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-primary">
+                        {% if strike == 0%}
+                        Avançar
+                        {% else %}
+                        Comparar
+                        {% endif %}
+
+                      </button>
+                  </form>
+                </span>
+                {% endif %}
+          {% else %}
+          <div class="row col-12">
+            <span class="col-3">
+                <h5 class="monstro">Monstro aliado</h5>
+                <img src="{% static "global/img/MonsterCardZone.webp" %}"class="monstro_b"    style="width: 164px; height: 242px;">
+
+            </span>
+            <span class="col-3">
+              <h5 class="monstro">Monstro adversário</h5>
+              <img src="{% static "global/img/MonsterCardZone.webp" %}" class="monstro_b"  style="width: 164px; height: 242px;">
+            </span>
+          {% endif %}
+
+          </div>
+        </div>
+        <div class="row  "> 
+          <div class="row col-6 align-items-end px-0 ">
+            <div class="row col-12"> 
+              <div class="col-4 col-md-2">
+                <h6 class="textoLP"> Yuji LP </h6>
+                {% for life in lifes %}
+                  <img src="{% static "global/img/heart.jpg" %}" class="img-fluid coracao">
+                {% endfor %}
+              </div>
+              <div class="col-4 col-md-2">
+                <h6 class="textoLP"> Adv LP </h6>
+                {% for strike in strike_left %}
+                  <img src="{% static "global/img/heart.jpg" %}" class="img-fluid coracao">
+                {% endfor %}
+              </div>
+              <form class="col-sm-12 col-md-2" method="post" action="{% url 'contact:batalha1' %}?recomecar=true">
+                {% csrf_token %}
+                  <button type="submit" style="width:auto;" class="btn btn-light ">
+                    <h6 class="recom">Recomeçar Fase 1</h6>
+                  </button>
+                </form>    
+            </div>
+          
+            <div class="progress mb-0 p-0">
+              <div class="progress-bar progress-bar-striped bg-blue" role="progressbar"
+               style="width: {{energy}}%" aria-valuenow="{{energy}}" aria-valuemin="0" 
+               aria-valuemax="100">{{energy}} de energia mágica</div>
+            </div>
+          </div>
+          <div class="row col-6 justify-content-end  ">
+            {% if energy > 70  %}
+            <div class="col-2 ">
+              <form method="post" action="{% url 'contact:batalha1' %}?draw=true&destinydraw=true">
+                {% csrf_token %}
+                <button style="width:auto;" type="submit" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="70 energia mágica: Mude a sua próxima draw para sua melhor carta">
+                  <h6 class="destinydraw">Destiny Draw</h6>
+                </button>
+              </form>
+              </div>
+            {% endif %}
+            
+            <div class="col-6 offset-3 offset-lg-0 justify-content-end">
+              <div class="m-0">
+                {% if verification == False %}
+                  {% if strike == 0  %}
+                    <form method="post" action="{% url 'contact:batalha1' %}?draw=true">
+                    {% csrf_token %}
+                      <button type="submit" class="btn btn-dark">
+                        <h6>Avançar</h6>
+                        <img src="{% static 'global/img/sleeve.jpg' %}" class="img-fluid">
+                      </button>
+                    </form>
+                  {% else %}
+                  <form method="post" action="{% url 'contact:batalha1' %}?draw=true">
+                  {% csrf_token %}
+                    <button type="submit" class="btn btn-dark">
+                      <h6>Draw</h6>
+                      <img src="{% static 'global/img/sleeve.jpg' %}" class="img-fluid">
+                    </button>
+                  </form>
+                  {% endif %}
+                {% else %}
+                  <button class="btn btn-dark">
+                    <h6> Draw </h6>
+                    <img src="{% static 'global/img/sleeve.jpg' %}" class="img-fluid">
+                  </button>
+                {% endif %}
+                  
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+  </div>
+{% endblock block %}

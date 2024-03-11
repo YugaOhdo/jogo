@@ -1,0 +1,191 @@
+{% extends "global/base.html" %}
+
+{% load static %}
+
+{% block block %}
+{% if variavel == 1 %}
+<style>
+    html {
+        background: url('{% static 'global/img/imagem1.jpg' %}') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+       
+</style>
+<div class="h-100 w-100" style="background: url('{% static 'global/img/imagem1.jpg' %}') no-repeat; background-size: 120% 100%; 
+ opacity: 1; " >
+    <div class="container w-75 h-100  d-flex text-center 
+align-items-center justify-content-center">
+    <div class="row h-75  align-items-center justify-content-center ">
+        
+    <h2 class="col-12"> <p class="paragrafo"> Em um outro universo, os Monstros de Duelo
+         criados por Pegasus J. Crawford passaram a ser usados
+    como armas para a Terceira Guerra Mundial após as cartas serem
+     materializadas com Real Solid Vision.
+    </p> </h2> 
+        <h2 class="col-12"> <p class="paragrafo"> 
+            As armas convencionais não tem efeitos nos monstros de duelo, 
+            apenas poder mágico e cartas são usados na guerra, que
+             consiste em eliminar todos os
+            duelistas fortes das outras nações, até que uma esteja sobre o controle do mundo.
+            </p>
+        </h2>
+
+    <form  method="post" action="{% url 'contact:history' %}?segundo=true" >
+        {% csrf_token %}
+        <button class="btn btn-primary" style="width:auto;" type="submit"> Avançar  </button>
+
+    </form>
+    </div>
+</div>
+</div>
+
+{% elif variavel == 2 %}
+<style>
+    html { 
+    background: url('{% static 'global/img/imagem2.jpg' %}') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+ }
+</style>
+<div class="h-100 w-100" style="background: url('{% static 'global/img/imagem2.jpg' %}') no-repeat; background-size: 120% 100%; opacity: 1; " >
+
+    <div class="container w-75 h-100  d-flex text-center 
+    align-items-center justify-content-center">
+        <div class="row h-75  align-items-center justify-content-center ">
+            
+        <h2 class="col-12"> <p class="paragrafo"> 
+            Nesse contexto, Yuji Shotoku,  
+            o mais forte general japonês que é
+            responsável por milhões de 
+            mortes nessa guerra, vai em uma importante missão com seus soldados mais poderosos
+            para derrotar a tropa mais forte dos Estados Unidos da América, em uma batalha
+            que pode definir o vencedor da guerra.
+        </p> </h2> 
+            <h2 class="col-12"> <p class="paragrafo"> 
+                Yuji também é conhecido por ser um dos mais habilidosos magos, com uma capacidade
+                alta de armazenar energia mágica, que é usada para fortalecer os monstros e
+                gerar ataques em uma batalha de monstros de duelo.
+                </p>
+            </h2>
+        <div class="row col-8">
+            <form class="col-3" method="post" action="{% url 'contact:history' %}?primeiro=true" >
+                {% csrf_token %}
+                <button class="btn btn-primary col-12"style="width:auto;" type="submit"> Anterior  </button>
+        
+            </form>
+            <form class="offset-6 col-3" method="post" action="{% url 'contact:history' %}?terceiro=true" >
+                {% csrf_token %}
+                <button class="btn btn-primary col-12"style="width:auto;" type="submit"> Próximo  </button>
+
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+{% elif variavel == 3 %}
+<style>
+    html { 
+    background: url('{% static 'global/img/blue-eyes.webp' %}') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+ }
+</style>
+<div class="h-100 w-100 mb-0" style="background: url('{% static 'global/img/blue-eyes.webp' %}') no-repeat; background-size: 120% 100%; opacity: 1; " >
+
+    <div class="container w-75 h-100  d-flex text-center
+    align-items-center justify-content-center">
+        <div class="row h-75  align-items-center justify-content-center ">
+            
+        <h2 class="col-12"> <p class="paragrafo">
+            Porém, as tropas americanas utilizaram as almas de
+            dezenas de milhões do seu próprio povo para utilizar um ritual mágico
+            de invocação do Blue-Eyes White Dragon, que estaria presente na batalha por
+            3 minutos, o suficiente para pegar de surpresa as tropas de Yuji.
+        </p> </h2> 
+            <h2 class="col-12"> <p class="paragrafo"> 
+                As tropas japonesas eram mais fortes e mataram todos os soldados americanos, 
+                com exceção de 3 generais, 
+                mas o Blue-Eyes, no pequeno período que pode ser invocado,
+                dizimou todos os japoneses que estavam na batalha, com 
+                exceção de Yuji.
+                
+                <p class="paragrafo"> A batalha que está por vir irá decidir qual nação tem o melhor duelista vivo...
+                </p> 
+                </p>
+            </h2>
+
+            <div class="row col-8">
+                <form class="col-3 ml-0" method="post" action="{% url 'contact:history' %}?segundo=true" >
+                    {% csrf_token %}
+                    <button class="btn btn-primary col-12"style="width:auto;"  type="submit"> Anterior  </button>
+            
+                </form>
+                <form class="offset-6 col-3 " method="post" action="{% url 'contact:history' %}?quarto=true" >
+                    {% csrf_token %}
+                    <button class="btn btn-primary col-12" style="width:auto;" type="submit"> Próximo  </button>
+    
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+{%elif variavel == 4 %}
+<style>
+    html { 
+    background: url('{% static 'global/img/imagem3.jpg' %}') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+ }
+</style>
+<div class="h-100 w-100" style="background: url('{% static 'global/img/imagem3.jpg' %}') no-repeat; background-size: 120% 100%; opacity: 1; " >
+
+    <div class="container w-75 h-100  d-flex text-center 
+    align-items-center justify-content-center">
+        <div class="row h-75  align-items-center justify-content-center ">
+            
+        <h2 class="col-12"> <p class="paragrafo">
+            Durante o ataque do Blue-Eyes, Yuji gastou todas as suas cartas para se defender
+        e refez seu deck com cartas no chão de soldados mortos. Fazendo assim um baralho 
+        muito mais fraco do que o seu ideal.
+            
+        </p> </h2> 
+            <h2 class="col-12"> <p class="paragrafo"> 
+                Nessa altura dos acontecimentos, Yuji encurralou um dos generais e começou
+                uma batalha com monstros de duelos.
+                </p>
+            </h2>
+
+            <div class="row col-8">
+                <form class="col-3 ml-0" method="post" action="{% url 'contact:history' %}?terceiro=true" >
+                    {% csrf_token %}
+                    <button class="btn btn-primary m-0 " style="width: auto" type="submit"> Anterior  </button>
+            
+                </form>
+                <form class=" 
+                 offset-6 col-3" method="post" action="{% url 'contact:history' %}?quinto=true" >
+                    {% csrf_token %}
+                    <button  class="btn btn-primary m-0 "style="width: auto" type="submit">
+                         Próximo  </button>
+    
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+
+{% endblock block %}

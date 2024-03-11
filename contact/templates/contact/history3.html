@@ -1,0 +1,49 @@
+{% extends "global/base.html" %}
+
+{% load static %}
+
+{% block block %}
+{% if variavel == 1 %}
+<style>
+    html { 
+    background: url('{% static 'global/img/imagem5.jpg' %}') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+ }
+</style>
+<div class="h-100 w-100" style="background: url('{% static 'global/img/imagem5.jpg' %}') no-repeat; background-size: 120% 100%; opacity: 1; " >
+
+<div class="container w-75 h-100  d-flex text-center 
+align-items-center justify-content-center">
+    <div class="row h-75  align-items-center justify-content-center ">
+        
+    <h2 class="col-12"> <p class="paragrafo"> 
+        Depois de perder todas as suas cartas e gastar toda sua energia mágica, Yuji
+        se depara com seu último inimigo que está acumulando energia mágica em seu monstro
+        para dar um ataque final.
+        
+    </p> </h2> 
+        <h2 class="col-12"> <p class="paragrafo"> 
+            Nesse momento só resta o desespero, apesar das chances de encontrarem cartas
+        fortes no chão serem baixíssimas, Yuji tenta esse último recurso para tentar superar
+        o ataque final que está vindo e assim derrotar o último general e se tornar o duelista
+        mais forte vivo.
+            </p>
+        </h2>
+
+    <form  method="post" action="{% url 'contact:history3' %}?segundo=true" >
+        {% csrf_token %}
+        <button class="btn btn-primary w-25" type="submit"> Avançar  </button>
+
+    </form>
+    </div>
+</div>
+
+</div>
+
+{% endif %}
+
+
+{% endblock block %}

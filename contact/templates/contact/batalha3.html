@@ -1,0 +1,282 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+
+{% block block %}
+<style>
+    html { 
+    background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+ }
+
+ @media (max-width: 400px) { 
+    .imgr {
+        width: 90px;
+    }
+     .text-custom {
+        font-size: 7px !important;
+    }
+    .button-custom {
+        width: auto !important;
+        height: 20px;
+        padding:0px
+
+    }
+    h7 {
+        font-size: 7px; 
+    }
+    h3 {
+        font-size: 8px;
+    }
+    .tabela {
+        width: 30px; /* Faz as imagens ocuparem toda a largura do container */
+        height: 50px; /* Mantém a proporção da imagem */
+    }
+ }
+ @media(min-width: 400px) and  (max-width: 576px) { 
+    .imgr {
+        width: 90px;
+    }
+     .text-custom {
+        font-size: 9px !important;
+    }
+    .button-custom {
+        width: auto !important;
+        height: 20px;
+
+    }
+    h7 {
+        font-size: 8px; 
+    }
+    h3 {
+        font-size: 10px;
+    }
+    .tabela {
+        width: 30px; /* Faz as imagens ocuparem toda a largura do container */
+        height: 50px; /* Mantém a proporção da imagem */
+    }
+  }
+ 
+ /* Small devices (telefones, 576px e mais) */
+ @media (min-width: 576px) and (max-width: 768px) { 
+    .imgr {
+        width: 110px;
+    }
+    .text-custom {
+        font-size: 9px !important;
+    }
+    .button-custom {
+        width: auto !important;
+        height:20px;
+        
+    }
+    h3 {
+        font-size: 14px;
+    } 
+    .tabela {
+        width: 50px; /* Faz as imagens ocuparem toda a largura do container */
+        height: 70px; /* Mantém a proporção da imagem */
+    }
+  }
+ 
+ /* Medium devices (tablets, 768px e mais) */
+ @media (min-width: 768px) and (max-width: 992px){ 
+    h3 {
+        font-size: 22px;
+    } 
+    .text-custom {
+       font-size: 13px !important; 
+    }
+    .button-custom {
+        width: auto !important;
+        height:30px;
+    }
+    .imgr {
+        width: 130px;
+    }
+    
+    .tabela {
+        width: 70px; /* Faz as imagens ocuparem toda a largura do container */
+        height: 80px; /* Mantém a proporção da imagem */
+    }
+  }
+ 
+ @media (min-width: 992px) and (max-width: 1200px) { 
+    .imgr {
+        width:14%;
+    }
+    .tabela {
+        width: 90px; 
+        height: 90px; 
+    }
+    .button-custom {
+        width:auto;
+        height: 35px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .imgr {
+        width:14%;
+    }
+    .button-custom {
+        width:auto;
+        height: 40px;
+    }
+   
+  }
+   
+
+</style>
+<div class=" h-100 w-100 mb-0 text-white" 
+style="background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat;  
+background-size: cover;
+background-position: center; opacity: 1; padding:0px;margin:0px; height: 100vh; ">
+
+<div class="row">
+    <form method="post" action="{% url 'contact:batalha3' %}?tutorial=true" class="col-12">
+      {% csrf_token %}
+      <button type="submit" style="width:auto;" class="btn btn-primary button-custom" data-toggle="tooltip" data-placement="top" title="50 energia mágica: recupere 1 ponto de vida">
+        <p class="text-custom">Tutorial</p>
+      </button> <br>
+    
+    </form>
+    {% if tutorial %}
+        <p class="text-custom" style="text-align: justify;" > 
+        Condição de vitória: Você tem 7 tentativas para achar cartas que somem mais 
+        poder de ataque que o monstro do oponente que aumenta 10% de seu ataque a cada turno<br>
+        <br>
+        Aperte em começar para iniciar<br>
+        Aperte em cima da carta para obtê-la<br>
+        Após todas as tentativas você deve apertar o botão de batalhar<br>
+        
+    {% endif %}
+</div>
+  
+
+{% if batalhar == True %}
+<div class="align-items-start d-flex  m-0 w-100">
+
+{% for imag in lista_aliados %}
+    <img class="imgr" style="width: 14%;" src="{% static imag %}" >
+{% endfor %}
+
+</div>
+<h4>
+    ATK: {{poder_somado}}
+</h4>
+<br>
+<br>
+<div class=" d-flex align-items-center m-0 w-100">
+    <img class="" style="width: 14%;" src="{% static boss_inimigo %}"  >
+</div>
+<h4>
+    ATK: {{boss_Inimigo_atk}}
+</h4>
+<div class="">
+    <form method="post" action="{% url 'contact:resultado' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger ">
+            Finalizar
+        </button>
+    </form>
+</div>
+
+{% elif fim == False %}
+<div class=" d-flex">
+    <div class=" d-flex p-0  align-items-start m-0">
+        <table class="table table-responsive w-25" style="margin: 0; padding: 0;">
+            <tbody>
+                <form method="post" action="{% url 'contact:batalha3'%}?flip=true">
+                    {% csrf_token %}
+                    {% for imagem in sequencia %}
+                    <tr>
+                        {% for s in imagem  %}
+                        {% if contador_batalha > 0 and andamento == True %}
+                        <td>
+                            <button name="botao_id" value="{{ forloop.parentloop.counter|stringformat:'d' }}-{{ forloop.counter|stringformat:'d' }}" type="submit" style="border: none; background: none; padding: 0;">
+                            {% if flip and s.t == 1 %}
+                                <img class="tabela" width="100px" src="{% static s.v %}" alt="Imagem">
+                            {% else %}
+                                <img class="tabela" width="100px" src="{% static s.i %}" alt="Imagem">
+                            {% endif %}
+                            </button>
+                        </td>
+
+                        {% else %}
+                        <td>
+                            {% if flip and s.t == 1 %}
+                                <img class="tabela" width="100px" src="{% static s.v %}" alt="Imagem">
+                            {% else %}
+                                <img class="tabela" width="100px" src="{% static s.i %}" alt="Imagem">
+                            {% endif %}
+                        </td>
+                        {% endif %}
+                       
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </form>
+            </tbody>
+        </table>   
+    </div>
+    <div class="container d-flex justify-content-end w-75 ml-0 align-items-center">
+        {% if comecou ==  False %}
+        <form method="post" action="{% url 'contact:batalha3'%}?comecar=true">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success button-custom" style="">
+                <h6  class="text-custom"> Começar</h6>
+            </button>
+        </form>
+        {% else %}
+        <div class="row col-12 align-items-end ">
+            <div class="col-3  ">
+                {% if contador_batalha == 0 or superou > 0 %}
+                    <form class="col-12" method="post" action="{% url 'contact:batalha3'%}?batalhar=true">
+                        {% csrf_token %}
+                        <button class="btn btn-danger button-custom " type="submit">
+                           <h6 class="text-custom" > batalhar </h6>
+                        </button>
+                    </form>
+                {% endif %}
+                <img class="col-12" src="{% static "global/img/imagem2.jpg" %}" 
+                style="height:10%" >
+                <div class=" row  justify-content-center align-items-end"> 
+                    <h7 class="col-12 text-center"> ATK  </h7> 
+                    <h3 class="col-12 text-center"> {{poder_somado}} </h3>
+                </div>
+
+            </div>
+
+            <div class="col-9  align-items-center justify-content-end" 
+            >
+
+                <h3 class="row justify-content-center"> Death Counter: {{contador_batalha}} </h3>
+                <img class="offset-2 col-10" src="{% static boss_inimigo %}"  >
+                <div class=" row  justify-content-center align-items-center"> 
+                    <h7 class="col-12 text-center"> Opponent ATK  </h7> 
+                    <h3 class="col-12 text-center"> {{boss_Inimigo_atk}} </h3>
+                </div>
+
+            </div>
+        </div>
+
+
+        {% endif %}
+    </div>
+    
+</div>
+
+{% endif %}
+<form method="post" action="{% url 'contact:batalha3' %}?recomecar=true" class="col-12">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary button-custom" data-toggle="tooltip" data-placement="top" title="50 energia mágica: recupere 1 ponto de vida">
+      <p class="text-custom">Recomeçar fase 3</p>
+    </button> <br>
+  
+  </form>
+</div>
+
+{% endblock block %}

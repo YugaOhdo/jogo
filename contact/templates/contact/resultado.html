@@ -1,0 +1,47 @@
+{% extends "global/base.html" %}
+
+{% load static %}
+
+{% block block %}
+
+{% if resultado == 'w'  %}
+<div class=" h-100 w-100" style="background: url('{% static 'global/img/imagem6.jpg' %}') no-repeat; background-size: 120% 100%; opacity: 1; " >
+
+    <h1> Você venceu </h1>
+    <form  method="post" action="{% url 'contact:index' %}" >
+        {% csrf_token %}
+        <button type="submit" > Jogar novamente </button>
+    </form>
+</div>
+{% else %}
+<div class="h-100 w-100 text-center" style="background:url('{% static 'global/img/fundo_batalha.jpg' %}') ; background-size: cover; opacity: 1; " >
+
+    <h1> Você perdeu </h1>
+    <form  method="post" action="{% url 'contact:index' %}" >
+        {% csrf_token %}
+        <button type="submit" > Reiniciar tudo </button>
+    </form>
+
+{% if fase_atual == 3  %}
+    <form  method="post" action="{% url 'contact:batalha3' %}?recomecar=True" >
+        {% csrf_token %}
+        <button type="submit" > Reiniciar fase 3 </button>
+    </form>
+{% elif fase_atual == 1 or energy == 0 or vidafase2 == 0 %}
+    <form  method="post" action="{% url 'contact:batalha1' %}?recomecar=True&comecar=True" >
+        {% csrf_token %}
+        <button type="submit" > Reiniciar fase 1 </button>
+    </form>
+{% elif fase_atual == 2  %}
+<form  method="post" action="{% url 'contact:batalha2' %}?recomecar=True" >
+    {% csrf_token %}
+    <button type="submit" > Reiniciar fase 2 </button>
+</form>
+
+
+<div>
+{% endif %}
+{% endif %}
+
+
+{% endblock block %}

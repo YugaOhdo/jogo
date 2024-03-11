@@ -1,0 +1,376 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+
+{% block block %}
+<style>
+    html { 
+    background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+ }
+ @media (max-width: 576px) { 
+    html {
+        font-size:10px;
+    }
+
+    
+    button {
+        width: auto !important;
+    }
+  }
+ 
+ @media (min-width: 576px) and (max-width: 768px) { 
+    html {
+        font-size:12px;
+    }
+    button {
+        width: auto !important;
+    }
+  }
+ 
+ @media (min-width: 768px) and (max-width: 992px){ 
+    html {
+        font-size: 14px;
+    }
+    button {
+        width: auto !important;
+    }
+  }
+ 
+ @media (min-width: 992px) and (max-width: 1200px) { 
+    
+  }
+  @media (min-width: 1200px) {
+    
+
+  }
+</style>
+<div class=" text-white h-100 w-100 mb-0" style="background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat; background-size: cover; opacity: 1; " >
+    <div class="row">
+    <form class="col-12" method="post" action="{% url 'contact:batalha2' %}?tutorial=true" >
+    {% csrf_token %}
+    <button class="col-2" style="width: auto;"> Tutorial </button> 
+    </form>
+    {% if tutorial %}
+    <p class="tutorial"> 
+        Condição de vitória 1: Tirar a vida do adversário <br>
+        Condição de vitória 2: O adversário perder toda energia mágica <br>
+        3 ações por turno, alternando entre turnos defensivos e ofensivos <br>
+        <br>
+        Habilidades <br>
+        Miracle - Não fazer nada pelo resto do turno <br>
+        Blue Medicine - 5 energia mágica: ganhe 300 pontos de vida <br>
+        Acceleration[ativação única] - 10 energia mágica: 2 ataques extras próximo turno <br>
+        Rising Energy[ativação única] - 15 energia mágica: dano inimigo se torna 150% ou seu dano se torna 10%<br>
+        <br>
+        Magias de ataque <br>
+        Hinotama - 5 energia mágica: cause 500 de dano <br>
+        Gun - 3 energia mágica: cause 300 de dano<br>
+        Thounsand Knives[ativação única] - 10 energia mágica: cause 1200 de dano perfurando qualquer defesa <br>
+        <br>
+        Magias de defesa <br>
+        Evasion - 12 energia mágica: desvie de todos os ataques inimigos <br>
+        Ring of Defense - 7 energia mágica: proteção de 500 de defesa <br>
+        Angel Wing[ativação única] - 10 energia mágica: proteção de 700 de defesa, permite um ataque extra no próximo ataque <br>
+        Millennium Shield[ativação única] - 8 energia mágica: proteção de 800 de defesa <br>
+    </p>
+    {% endif %}
+    </div>
+
+    <div class="container col-12">
+        <div class="h-75 d-flex flex-column">
+            <div class="row col-12">
+                <div class="row col-2 ml-5">
+                    LP: {{elife}}
+                    <div class="row justify-content-center">  
+                        <div class="progress mb-0 p-0">
+                            <div class="progress-bar progress-bar-striped bg-blue" role="progressbar"
+                                style="width: {{dark_energy}}%" aria-valuenow="{{dark_energy}}" aria-valuemin="0" 
+                                aria-valuemax="200">{{dark_energy}} de energia mágica
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="h-75 row col-12 d-flex justify-content-center m-4 ">
+                <div class="h-50 d-flex justify-content-center ">
+            {% if dark_energy_blast %}
+                <div class="row col-12 col-lg-7 h-50 ml-auto">
+                    <img src="{% static "global/img/darkenergyball.png" %}" class="col-4">
+                    <img src="{% static "global/img/darkenergyball.png" %}" class="col-4">
+                    <img src="{% static "global/img/darkenergyball.png" %}" class="col-4">
+                </div>
+            {% elif dark_energy_shield %}
+                <div class="row col-12 col-lg-7 h-50 ml-auto">
+                    <img src="{% static "global/img/DarkWallofWind.webp" %}" class="col-4">
+                    <img src="{% static "global/img/DarkWallofWind.webp" %}" class="col-4">
+                    <img src="{% static "global/img/DarkWallofWind.webp" %}" class="col-4">
+                </div>
+
+
+            {% endif %}
+                </div>
+                
+                <div class=" row col-12 col-lg-7 h-25 mb-5" >
+                    {% for imagem in feiticos_img  %}
+                        {% if expandir == 6 or expandir == 5 %}
+                        <img src="{% static 'global/img/'|add:imagem %}" class="col-2">
+                        {% elif expandir == 4 %}
+                        <img src="{% static 'global/img/'|add:imagem %}" class="col-3">
+                        {% else %}
+                            <img src="{% static 'global/img/'|add:imagem %}" class="col-4">
+                        {% endif %}  
+                    {% endfor %}
+                </div>
+                
+            </div>
+            
+        <div>
+            
+
+
+            <div class="row col-12 mt-5 ">
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?nothing=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Não fazer nada pelo resto do turno">
+                            <img src="{% static "global/img/miracle.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?bluemedicine=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="5 energia mágica: ganhe 300 pontos de vida">
+                            <img src="{% static "global/img/blue_medicine.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                {% if acceleration == False %}
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?acceleration=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="10 energia mágica: 2 ataques extras próximo turno">
+                            <img src="{% static "global/img/acceleration.png" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+    
+                {% endif %}
+                    
+                    
+    
+                    
+                {% if rising_energy == False %}
+                    <div class="col-3 col-md-2 col-xl-1">
+                        <form method="post" action="{% url 'contact:batalha2' %}?risingenergy=true">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="15 energia mágica: dano inimigo se torna 150% ou seu dano se torna 10% ">
+                                <img src="{% static "global/img/RisingEnergy.webp" %}" class="img-fluid">
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            {% if resto_turno == 0  %}
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?hinotama=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="5 energia mágica: cause 500 de dano">
+                            <img src="{% static "global/img/hinotama.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?gun=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="3 energia mágica: cause 300 de dano">
+                            <img src="{% static "global/img/gun.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                {% if thousandknives == False %}
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?thousandknives=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="10 energia mágica: cause 1200 de dano perfurando qualquer defesa">
+                            <img src="{% static "global/img/thousandknives.png" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="col-3 col-md-2 col-xl-1">
+                    
+                        <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="">
+                            <img src="{% static "global/img/hinotama.jpg" %}" class="img-fluid">
+                        </button>
+                    
+                </div>
+                <div class="col-3 col-md-2 col-xl-1">
+                    
+                        <button  class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="">
+                            <img src="{% static "global/img/gun.jpg" %}" class="img-fluid">
+                        </button>
+                    
+                </div>
+
+                {% if thousandknives == False %}
+
+                <div class="col-3 col-md-2 col-xl-1">
+                        <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="">
+                            <img src="{% static "global/img/thousandknives.png" %}" class="img-fluid">
+                        </button>
+                    
+                </div>
+                {% endif %}
+                
+            {% endif %}
+                {% if resto_turno == 1 %}
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?evasion=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="12 energia mágica: desvie de todos os ataques inimigos">
+                            <img src="{% static "global/img/evasion.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?ringofdefense=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="7 energia mágica: proteção de 500 de defesa">
+                            <img src="{% static "global/img/ringofdefense.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                {% if angelwing == False  %}
+
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?angelwing=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="10 energia mágica: proteção de 700 de defesa, permite um ataque extra no próximo ataque ">
+                            <img src="{% static "global/img/angelwing.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+                {% if millenniumshield == False %}
+
+                <div class="col-3 col-md-2 col-xl-1">
+                    <form method="post" action="{% url 'contact:batalha2' %}?millenniumshield=true">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="8 energia mágica: proteção de 800 de defesa">
+                            <img src="{% static "global/img/millenniumshield.jpg" %}" class="img-fluid">
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="col-3 col-md-2 col-xl-1">
+                    
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="">
+                            <img src="{% static "global/img/evasion.jpg" %}" class="img-fluid">
+                        </button>
+                   
+                </div>
+                <div class="col-3 col-md-2 col-xl-1">
+                    
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="">
+                            <img src="{% static "global/img/ringofdefense.jpg" %}" class="img-fluid">
+                        </button>
+                    
+                </div>
+
+                {% if angelwing == False  %}
+                    <div class="col-3 col-md-2 col-xl-1">
+                    
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="">
+                            <img src="{% static "global/img/angelwing.jpg" %}" class="img-fluid">
+                        </button>
+               
+                    </div>
+                {% endif %}
+                
+                {% if millenniumshield == False %}
+                
+                <div class="col-3 col-md-2 col-xl-1">
+                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="">
+                            <img src="{% static "global/img/millenniumshield.jpg" %}" class="img-fluid">
+                        </button>
+                    
+                </div>
+                {% endif %}
+                {% endif %}
+
+                
+          
+                
+
+                
+
+                
+            </div>
+
+            <div class="row col-3 mt-auto">
+                <div class="ml-5">
+                    LP: {{life}}
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">  
+            <div class="progress mb-0 p-0">
+                <div class="progress-bar progress-bar-striped bg-blue" role="progressbar"
+                    style="width: {{energy}}%" aria-valuenow="{{energy}}" aria-valuemin="0" 
+                    aria-valuemax="200">{{energy}} de energia mágica
+                </div>
+            </div>
+        </div>
+
+        <div class="row col-12 ">
+            
+            <div class="col-6 justify-content-end">
+                Turno: {{turno}}
+            </div>
+            
+            {% if contagem != 0 %}
+            <div class="col-12">
+                <form method="post" class="" action="{% url 'contact:batalha2' %}?faseDeBatalha=true">
+                    {% csrf_token %}
+                <button class="btn btn-dark" type="submit" style="font-size:30px;"> Batalhar </button>
+                </form>
+            </div>
+
+            {% else %}
+            <div class="col-12">
+                <button class="btn btn-dark" type="submit"style="font-size:30px;"> Batalhar </button>
+                
+                    
+            </div>
+            {% endif %}
+            
+            <div class="col-12">
+                Defesas extra sobrando Yuji: {{calculo_player}}
+            </div>
+            <div class="col-12">
+                Defesas extra sobrando oponente: {{calculo_inimigo}}
+               
+            </div>
+             
+    
+        </div>
+        <div class="row">
+            <form class="col-12" method="post" action="{% url 'contact:batalha2' %}?recomecar=true">
+                {% csrf_token %}
+                  <button type="submit" class="btn btn-light">
+                    <h6 class="recomecar2">Recomeçar Fase 2</h6>
+                  </button>
+            </form>   
+        </div>
+    </div>
+   
+</div>
+
+{% endblock block %}

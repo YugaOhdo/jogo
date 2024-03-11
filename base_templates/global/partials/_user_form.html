@@ -3,19 +3,20 @@
         {% for field in form %}
         
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }}
-        {{field.errors}}
+        <div>{{ field }}</div>
+        <!-- {{field.errors}}
         {% if field.help_text %}
         <div class="form-text text-muted">{{ field.help_text }}</div>
-        {% endif %}
-        {% if form.non_field_errors %}
+        {% endif %} -->
+        <!-- {% if form.non_field_errors %}
         <div class="errorList">
             {{form.non_field_errors }}
         </div>
-        {% endif %}
+        {% endif %} -->
 
         {% endfor %}
        
-    <br>
-    <button class="btn btn-dark form-control w-25" type="submit">Send</button>
+    <div>
+    <button class="btn btn-primary form-control w-50" type="submit">Send</button>
+    </div>
 </form>

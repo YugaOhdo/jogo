@@ -4,18 +4,16 @@ from contact import views
 
 app_name = 'contact'
 urlpatterns = [
-    path('search/', views.search, name='search'),
     path('', views.index, name='index'),
-    
-    #contact (CRUD)  meio que um formato padrão 
-    path('contact/<int:contact_id>/detail', views.oneContact, name='oneContact'),
-    path('contact/create/', views.create, name='create'),  #não tem o ID pq não foi criado
-    path('contact/<int:contact_id>/update/', views.update, name='update'),
-    path('contact/<int:contact_id>/delete/', views.delete, name='delete'),
-    path('user/register/', views.registerUser, name='registerUser'),
-    path('user/update/', views.userUpdate, name='userUpdate'),
-    path('user/login/', views.userLogin, name='login'),
-    path('user/logout/', views.userLogout, name='logout'),
+    path('deck/', views.showdeck, name='showdeck'),
+    path('battle/', views.batalha1, name='batalha1'),
+    path('battle2/', views.batalha2, name='batalha2'),
+    path('battle3/', views.batalha3, name='batalha3'),
+    # path('comparar/', views.comparar, name='comparar'),
+    path('resultado/', views.resultado, name='resultado'),
+    path('history/', views.history, name='history'),
+    path('history2/', views.history2, name='history2'),
+    path('history3/', views.history3, name='history3')
 
 
 

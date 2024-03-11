@@ -131,8 +131,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 try:
     from project.local_settings import *
     #usado pra caso seja necessario sobrescrever variáveis
 except ImportError:
     ...
+    

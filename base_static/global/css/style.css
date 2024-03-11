@@ -1,19 +1,11 @@
-/* body {
-    background: red;
-} */
-.responsive-table {
-    width: 100%;
-    overflow-x: auto;
-}
 
-.errorlist {
-    list-style-type: none;  /* Remove os marcadores de lista */
-    margin: 0;  /* Remove a margem padrão */
-    padding: 0;  /* Remove o preenchimento padrão */
-    color: red
-}
-form ul {
-    list-style-type: none;  /* Remove o ponto de lista */
-    margin: 0;
-    padding: 0;
+.paragrafo {
+    text-indent: 5%;
+    text-align: justify;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra do texto */
+    background-color: rgba(0, 0, 0, 0.5); /* Plano de fundo opaco para o texto */
+
+    
 }

@@ -1,0 +1,43 @@
+{% extends "global/base.html" %}
+
+{% load static %}
+
+{% block block %}
+<style>
+    html { 
+    background: url('{% static 'global/img/imagem4.jpg' %}') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+ }
+</style>
+{% if variavel == 1 %}
+<div class="h-100 w-100" style="background: url('{% static 'global/img/imagem4.jpg' %}') no-repeat; background-size: 100% 100%; opacity: 1; " >
+
+<div class="container w-75 h-100  d-flex text-center 
+align-items-center justify-content-center">
+    <div class="row h-75  align-items-center justify-content-center ">
+        
+    <h2 class="col-12"> <p class="paragrafo"> 
+        
+    </p> </h2> 
+        <h2 class="col-12"> <p class="paragrafo"> 
+            Após matar o primeiro general, Yuji sofre um ataque mágico por trás, que queima todas
+            as suas cartas restantes, mas para sua sorte, o segundo adversário não tinha cartas 
+            sobrando também, o que força ambos a batalharem apenas com suas capacidades mágicas.
+            </p>
+        </h2>
+
+    <form  method="post" action="{% url 'contact:history2' %}?segundo=true" >
+        {% csrf_token %}
+        <button class="btn btn-primary" style="width:auto;" type="submit"> Avançar  </button>
+
+    </form>
+    </div>
+</div>
+</div>
+{% endif %}
+
+
+{% endblock block %}

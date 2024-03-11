@@ -1,0 +1,73 @@
+{% extends "global/base.html" %}
+
+{% block block %}
+{% load static %}
+<style>
+  html { 
+  background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+  }
+  @media (max-width: 400px) { 
+   img {
+    width:30px !important;
+    height: 45px !important;
+   }
+   html {
+   }
+  }
+
+  @media (min-width:400px) and (max-width: 576px) { 
+    img {
+        width: 40px !important;
+        height: 58px !important;
+       }
+       
+  }
+ 
+ @media (min-width: 576px) and (max-width: 768px) { 
+    img {
+        width: 50px !important;
+        height: 73px !important;
+       }
+       
+  }
+ 
+ @media (min-width: 768px) { 
+    html {
+        font-size:20px !important;
+    }
+  }
+  </style>
+<div class="h-100 w-100 row align-items-center justify-content-center
+" style="margin:0; padding:0; background: url('{% static 'global/img/fundo_batalha.jpg' %}') no-repeat; background-size: cover; opacity: 1; " >
+
+<div class="container row align-items-center justify-content-center "> 
+    <div class="row align-items-center justify-content-center">
+        {% for card in cardlist|slice:":10" %}
+            <div class="col-1 m-0">
+                <img src="{% static card.img %}" alt="{{ card.name }}" style="width: 82px; height: 121px;">
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row justify-content-center m-0">
+        {% for card in cardlist|slice:"10:" %}
+            <div class="col-1">
+                <img src="{% static card.img %}" alt="{{ card.name }}" style="width: 82px; height: 121px;">
+            </div>
+        {% endfor %}
+    </div> 
+</div>
+<div class=" row text-white text-center justify-content-center align-items-center">
+    Com esse baralho Yuji terá que derrotar seus inimigos
+</div>
+<form class=" row align-items-center justify-content-center"  method="post" action="{% url 'contact:batalha1' %}?recomecar=True&comecar=True" >
+    {% csrf_token %}
+    <button class="btn btn-primary w-25" type="submit"> Avançar  </button>
+
+</form>
+</div>
+{% endblock block %}
